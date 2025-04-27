@@ -1,38 +1,67 @@
-# Product_Inventory_Data
 
- # Description
+# Product Analysis
+# Top 5 Product Ratings 
+select `Product Name`, `product ratings`
+from product_data
+order by `Product Ratings` desc
+limit 5;
 
-This project demonstrates how to perform structured data analysis using MySQL on a product dataset obtained from Kaggle. The dataset includes a variety of product-related attributes such as:
-
-1.Product ID, Name, and Category
-
-2.Product Description, Tags, and SKU
-
-3.Price, Stock, and Quantity Sold
-
-4.Warranty Period
-
-5.Dimensions, Color/Size Variations
-
-6.Manufacturing and Expiration Dates
-
-7.Product Ratings
-
-The project aims to extract actionable insights for inventory management, sales analysis, and product quality assessment.
-
-# Project Goals
-
-Explore and clean the dataset 
-
-Perform SQL-based analysis to derive business insights
-
-Identify patterns and trends across categories and ratings
-
-Build a library of reusable MySQL queries
+# Products out-of-stock
+select `Product Name`
+from product_data
+where `stock Quantity` = 0;
 
 
-# Tools & Technologies
+# top 5 products have the highest quantity sold
+select `product name`, `stock quantity`
+from product_data
+order by `Stock Quantity` desc limit 5;
 
-MySQL – for querying and analyzing structured data
+# Total inventory value for each product
+select `product name`, price, `stock quantity`, (price * `stock quantity`) as inventory_value
+from product_data;
 
-Kaggle – data source
+# Products having stocks less than 10
+select `product name`, `stock quantity`
+from product_data
+where `stock quantity` < 10;
+
+SELECT COUNT(*) AS low_stock_count
+FROM product_data
+WHERE `stock quantity` < 10;
+
+# Products available in each quantity
+select `product category`, count(*) as product_count
+from product_data
+group by `product category`;
+
+# Category having the highest stock quantity
+select `product category`, sum(`stock quantity`) as Total_stock
+from product_data
+group by `product category`
+order by Total_stock desc;
+
+# Avg product price
+select `product category`, round(avg(price),2) as avg_price
+from product_data
+Group by `product category`;
+
+# Products that expired
+select `product name`, `Expiration date`
+from product_data
+where `Expiration Date`< curdate();
+
+# list products manufactured in 6 months
+SELECT `Product Name`, `Manufacturing Date` 
+FROM product_data
+ WHERE `Manufacturing Date` >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH);
+ 
+# Products having less than 3 stars
+select `product name`, `product ratings`, price
+from product_data
+where `product ratings` < 3;
+
+
+SELECT `Product Name`, `Stock Quantity`, `Product Ratings` 
+FROM product_data
+WHERE `Stock Quantity` < 5 AND `Product Ratings` < 3;
