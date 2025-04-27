@@ -29,3 +29,10 @@ Perform SQL-based analysis to derive business insights
 Identify patterns and trends across categories and ratings
 
 Build a library of reusable MySQL queries
+
+
+# Tools & Technologies
+
+MySQL – for querying and analyzing structured data
+
+Kaggle – data source
